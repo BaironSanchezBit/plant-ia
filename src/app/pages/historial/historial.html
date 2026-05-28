@@ -1,0 +1,60 @@
+<div class="historial">
+
+  <div class="historial__header">
+    <h2 class="historial__title">Historial</h2>
+    <p class="historial__subtitle">{{ items.length }} diagnósticos registrados</p>
+  </div>
+
+  <div class="empty-state" *ngIf="items.length === 0">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <p>No hay diagnósticos aún</p>
+    <a routerLink="/diagnostico" class="btn btn--outline">Hacer un diagnóstico</a>
+  </div>
+
+  <div class="hist-list" *ngIf="items.length > 0">
+    <div
+      class="hist-item"
+      *ngFor="let item of items; let i = index"
+      [style.animationDelay]="(i * 0.07) + 's'"
+    >
+      <div class="hist-item__leaf">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M17 8C8 10 5.9 16.17 3.82 19.93C3 22 8 24 12 23C16 22 22 18 22 12C22 6 18 5 17 8Z" fill="currentColor"/>
+        </svg>
+      </div>
+
+      <div class="hist-item__body">
+        <div class="hist-item__top">
+          <span class="hist-item__plant">{{ item.planta }}</span>
+          <span class="hist-item__date">{{ formatFecha(item.fecha) }}</span>
+        </div>
+        <div class="hist-item__disease">{{ item.enfermedad.nombre }}</div>
+        <div class="hist-item__scientific">{{ item.enfermedad.nombreCientifico }}</div>
+        <div class="hist-item__bottom">
+          <div class="hist-item__confidence">
+            <div class="hist-item__conf-bar">
+              <div class="hist-item__conf-fill" [style.width.%]="item.enfermedad.confianza"></div>
+            </div>
+            <span class="hist-item__conf-num">{{ item.enfermedad.confianza }}%</span>
+          </div>
+          <span class="badge" [ngClass]="'badge--' + badgeClass(item.enfermedad.severidad)">
+            {{ severidadLabel(item.enfermedad.severidad) }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="historial__footer" *ngIf="items.length > 0">
+    <a routerLink="/diagnostico" class="btn btn--outline">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+        <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Nuevo diagnóstico
+    </a>
+  </div>
+
+</div>

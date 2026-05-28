@@ -1,0 +1,59 @@
+// ══════════════════════════════════════════
+//  PLANTIA — Design Tokens (SCSS reference)
+//  Los colores también están en CSS vars en
+//  styles.scss para uso en componentes.
+// ══════════════════════════════════════════
+
+// Core palette
+$bg-deep:         #071510;
+$bg-dark:         #0a1e0d;
+$primary:         #1a5c2e;
+$primary-mid:     #24743b;
+$secondary:       #2d7a42;
+$accent:          #4caf50;
+$accent-bright:   #6dd96e;
+$accent-dim:      #3d9142;
+
+// Text
+$text-primary:    #e8f5e2;
+$text-secondary:  #9fc49a;
+$text-muted:      #6b9c63;
+
+// Surfaces
+$surface-0:       rgba(255, 255, 255, 0.03);
+$surface-1:       rgba(255, 255, 255, 0.06);
+$surface-2:       rgba(255, 255, 255, 0.10);
+$border:          rgba(76, 175, 80, 0.15);
+$border-bright:   rgba(76, 175, 80, 0.35);
+
+// Semantic
+$success:         #4caf50;
+$warning:         #f9a825;
+$danger:          #e53935;
+
+// Shadows & Glows
+$glow-sm:         0 0 12px rgba(76, 175, 80, 0.25);
+$glow-md:         0 0 24px rgba(76, 175, 80, 0.35);
+$glow-lg:         0 0 48px rgba(76, 175, 80, 0.3);
+$shadow-card:     0 4px 24px rgba(0, 0, 0, 0.5);
+
+// Typography
+$font-display:    'Fraunces', serif;
+$font-body:       'Outfit', sans-serif;
+
+// Layout
+$mobile-max:      480px;
+$nav-height:      64px;
+$bottom-nav:      68px;
+
+// Radius
+$r-sm:    8px;
+$r-md:    14px;
+$r-lg:    20px;
+$r-xl:    28px;
+$r-full:  999px;
+
+// Transitions
+$t-fast: all 0.15s ease;
+$t-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+$t-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);

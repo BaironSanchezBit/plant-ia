@@ -1,0 +1,147 @@
+<div class="home">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero__bg">
+      <div class="hero__orb hero__orb--1"></div>
+      <div class="hero__orb hero__orb--2"></div>
+      <div class="hero__grid"></div>
+    </div>
+
+    <div class="hero__content">
+      <div class="hero__eyebrow">
+        <span class="hero__badge">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="12" cy="12" r="10"/>
+          </svg>
+          Inteligencia Artificial
+        </span>
+      </div>
+
+      <div class="hero__logo-wrap">
+        <img src="images/logo.png" alt="PLANTIA" class="hero__logo-img" />
+      </div>
+
+      <p class="hero__headline">Detecta enfermedades antes de que sea tarde</p>
+      <p class="hero__sub">
+        Diagnóstico instantáneo con inteligencia artificial. Identifica enfermedades antes de que afecten tu cultivo.
+      </p>
+
+      <div class="hero__actions">
+        <a routerLink="/diagnostico" class="btn btn--primary hero__cta">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M17 8C8 10 5.9 16.17 3.82 19.93C3 22 8 24 12 23C16 22 22 18 22 12C22 6 18 5 17 8Z" fill="currentColor"/>
+          </svg>
+          Iniciar diagnóstico
+        </a>
+        <a routerLink="/historial" class="btn btn--ghost">Ver historial</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Bar -->
+  <section class="stats">
+    <div class="stats__item">
+      <span class="stats__num">4</span>
+      <span class="stats__label">Enfermedades</span>
+    </div>
+    <div class="stats__divider"></div>
+    <div class="stats__item">
+      <span class="stats__num">87%+</span>
+      <span class="stats__label">Precisión</span>
+    </div>
+    <div class="stats__divider"></div>
+    <div class="stats__item">
+      <span class="stats__num">IA</span>
+      <span class="stats__label">Tecnología</span>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <p class="section-label" style="text-align:center; margin-bottom: 20px;">¿Por qué PLANTIA?</p>
+
+    <div class="feature-card">
+      <div class="feature-card__icon feature-card__icon--green">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="feature-card__body">
+        <h3 class="feature-card__title">Rápido</h3>
+        <p class="feature-card__desc">Resultados en segundos. Sin esperas, sin laboratorios.</p>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-card__icon feature-card__icon--blue">
+        <svg viewBox="0 0 24 24" fill="none">
+          <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+          <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="feature-card__body">
+        <h3 class="feature-card__title">Preciso</h3>
+        <p class="feature-card__desc">Modelos entrenados con miles de imágenes de plantas enfermas.</p>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-card__icon feature-card__icon--yellow">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="feature-card__body">
+        <h3 class="feature-card__title">Confiable</h3>
+        <p class="feature-card__desc">Recomendaciones de tratamiento basadas en evidencia científica.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="how">
+    <p class="section-label" style="margin-bottom: 20px;">Cómo funciona</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step__num">01</div>
+        <div class="step__body">
+          <h4 class="step__title">Captura la imagen</h4>
+          <p class="step__desc">Toma una foto de la hoja o planta afectada con tu cámara.</p>
+        </div>
+      </div>
+      <div class="step__connector"></div>
+      <div class="step">
+        <div class="step__num">02</div>
+        <div class="step__body">
+          <h4 class="step__title">La IA analiza</h4>
+          <p class="step__desc">Nuestro modelo procesa la imagen e identifica patrones de enfermedad.</p>
+        </div>
+      </div>
+      <div class="step__connector"></div>
+      <div class="step">
+        <div class="step__num">03</div>
+        <div class="step__body">
+          <h4 class="step__title">Obtén el diagnóstico</h4>
+          <p class="step__desc">Recibe el nombre de la enfermedad, nivel de confianza y recomendaciones.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Bottom -->
+  <section class="cta-bottom">
+    <div class="cta-bottom__card">
+      <h2 class="cta-bottom__title">¿Tu planta no se ve bien?</h2>
+      <p class="cta-bottom__sub">Haz un diagnóstico ahora — es gratis y toma menos de un minuto.</p>
+      <a routerLink="/diagnostico" class="btn btn--primary">
+        Analizar ahora
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+</div>

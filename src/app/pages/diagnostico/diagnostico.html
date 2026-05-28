@@ -1,0 +1,121 @@
+<div class="diagnostico">
+
+  <!-- Input file oculto — se activa desde los botones -->
+  <input
+    #fileInput
+    type="file"
+    accept="image/*"
+    class="file-input-hidden"
+    (change)="onFileSelected($event)"
+  />
+
+  <div class="diagnostico__header">
+    <h2 class="diagnostico__title">Diagnóstico</h2>
+    <p class="diagnostico__subtitle">Captura o sube una imagen de tu planta</p>
+  </div>
+
+  <!-- Zona de imagen -->
+  <div
+    class="img-zone"
+    [class.img-zone--selected]="imageSelected"
+    [class.img-zone--scanning]="isAnalyzing"
+  >
+
+    <!-- Estado vacío -->
+    <div class="img-zone__empty" *ngIf="!imageSelected">
+      <div class="img-zone__icon">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M17 8C8 10 5.9 16.17 3.82 19.93C3 22 8 24 12 23C16 22 22 18 22 12C22 6 18 5 17 8Z" fill="currentColor"/>
+          <path d="M12 23L12 12" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+        </svg>
+      </div>
+      <p class="img-zone__hint">Selecciona una imagen de la planta</p>
+      <p class="img-zone__sub">JPG, PNG, WEBP · Máx. 15 MB</p>
+    </div>
+
+    <!-- Vista previa de la imagen real -->
+    <div class="img-zone__preview" *ngIf="imageSelected && selectedImageUrl">
+      <img [src]="selectedImageUrl" alt="Planta seleccionada" class="img-zone__photo" />
+      <div class="scan-line" *ngIf="isAnalyzing"></div>
+      <button class="img-zone__remove" *ngIf="!isAnalyzing" (click)="clearImage()" title="Quitar imagen">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Mensaje de error -->
+  <p class="error-msg" *ngIf="errorMsg">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+      <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    {{ errorMsg }}
+  </p>
+
+  <!-- Botones de captura -->
+  <div class="capture-btns" *ngIf="!imageSelected && !isAnalyzing">
+    <button class="capture-btn" (click)="selectImage('camera')">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2v11z"
+              stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <span>Cámara</span>
+    </button>
+
+    <button class="capture-btn" (click)="selectImage('gallery')">
+      <svg viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+        <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/>
+        <path d="M21 15l-5-5L5 21" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      <span>Galería</span>
+    </button>
+  </div>
+
+  <!-- Nombre de la planta -->
+  <div class="plant-input" *ngIf="imageSelected">
+    <label class="plant-input__label">Nombre de la planta (opcional)</label>
+    <input
+      class="plant-input__field"
+      type="text"
+      placeholder="Ej: Tomate, Café, Rosa..."
+      [(ngModel)]="plantName"
+      [disabled]="isAnalyzing"
+    />
+  </div>
+
+  <!-- Botón analizar -->
+  <div class="analyze-wrap" *ngIf="imageSelected">
+    <button
+      class="btn btn--primary analyze-btn"
+      [disabled]="isAnalyzing"
+      (click)="analizar()"
+    >
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" [class.spin]="isAnalyzing">
+        <path *ngIf="!isAnalyzing"
+              d="M17 8C8 10 5.9 16.17 3.82 19.93C3 22 8 24 12 23C16 22 22 18 22 12C22 6 18 5 17 8Z"
+              fill="currentColor"/>
+        <path *ngIf="isAnalyzing"
+              d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      {{ isAnalyzing ? 'Analizando...' : 'Analizar con IA' }}
+    </button>
+  </div>
+
+  <!-- Barra de progreso -->
+  <div class="progress-panel" *ngIf="isAnalyzing">
+    <div class="progress-bar">
+      <div class="progress-bar__fill" [style.width.%]="progress"></div>
+    </div>
+    <div class="progress-info">
+      <span class="progress-msg">{{ progressMessage }}</span>
+      <span class="progress-pct">{{ progress | number:'1.0-0' }}%</span>
+    </div>
+  </div>
+
+</div>

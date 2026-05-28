@@ -1,0 +1,87 @@
+<div class="nosotros">
+
+  <!-- University Header -->
+  <div class="uni-header">
+    <div class="uni-header__emblem">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="uni-header__text">
+      <h3 class="uni-header__name">Universidad Piloto de Colombia</h3>
+      <p class="uni-header__faculty">Facultad de Ingeniería</p>
+      <p class="uni-header__dept">Área Sistemas, Telecomunicaciones y Mecatrónica</p>
+    </div>
+  </div>
+
+  <!-- PLANTIA Brand -->
+  <div class="brand-section">
+    <img src="images/logo.png" alt="PLANTIA" class="brand-section__logo-img" />
+  </div>
+
+  <!-- Mission -->
+  <div class="mission-card">
+    <div class="mission-card__icon">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M17 8C8 10 5.9 16.17 3.82 19.93C3 22 8 24 12 23C16 22 22 18 22 12C22 6 18 5 17 8Z" fill="currentColor" opacity="0.7"/>
+      </svg>
+    </div>
+    <div>
+      <h4 class="mission-card__title">Nuestra misión</h4>
+      <p class="mission-card__text">
+        Desarrollar herramientas de inteligencia artificial accesibles que ayuden a agricultores y amantes de las plantas a detectar y tratar enfermedades de forma oportuna, reduciendo pérdidas y promoviendo la agricultura sostenible en Colombia y Latinoamérica.
+      </p>
+    </div>
+  </div>
+
+  <!-- Tech Stack -->
+  <div class="tech-section">
+    <p class="section-label" style="margin-bottom: 14px;">Tecnologías utilizadas</p>
+    <div class="tech-pills">
+      <span class="tech-pill">Angular 20</span>
+      <span class="tech-pill">TypeScript</span>
+      <span class="tech-pill">SCSS</span>
+      <span class="tech-pill">Python</span>
+      <span class="tech-pill">TensorFlow</span>
+      <span class="tech-pill">YOLO</span>
+      <span class="tech-pill">CNN</span>
+      <span class="tech-pill">REST API</span>
+    </div>
+  </div>
+
+  <!-- Team -->
+  <div class="team-section">
+    <p class="section-label" style="margin-bottom: 16px;">Equipo de desarrollo</p>
+    <div class="team-grid">
+      <div class="member-card" *ngFor="let m of equipo; let i = index" [style.animationDelay]="(i * 0.09) + 's'">
+        <div class="member-card__avatar" [style.background]="m.color">
+          {{ m.iniciales }}
+        </div>
+        <p class="member-card__name">{{ m.nombre }}</p>
+        <p class="member-card__role">Desarrollador</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Info -->
+  <div class="footer-info">
+    <div class="footer-info__divider"></div>
+    <div class="footer-info__badges">
+      <div class="info-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="2"/>
+          <path d="M2 17l10 5 10-5" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        Proyecto académico · 2026
+      </div>
+      <div class="info-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        Bogotá, Colombia
+      </div>
+    </div>
+  </div>
+
+</div>
