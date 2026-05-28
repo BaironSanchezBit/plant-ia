@@ -1,127 +1,121 @@
 <div class="resultado" *ngIf="resultado">
 
-  <!-- Severity accent bar -->
-  <div class="severity-bar" [style.background]="severidadColor"></div>
+  <!-- Barra de color según severidad -->
+  <div class="sev-bar" [style.background]="severidadColor"></div>
 
-  <!-- Top status -->
-  <div class="status-header">
+  <!-- Cabecera de estado -->
+  <div class="status-row">
     <div class="status-check">
       <svg viewBox="0 0 24 24" fill="none">
-        <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </div>
-    <div class="status-text">
-      <span class="status-title">Diagnóstico completado</span>
-      <span class="status-meta">{{ resultado.planta }} &nbsp;·&nbsp; {{ formatFecha(resultado.fecha) }}</span>
+    <div>
+      <p class="status-title">Diagnóstico completado</p>
+      <p class="status-meta">{{ resultado.planta }} &nbsp;·&nbsp; {{ formatFecha(resultado.fecha) }}</p>
     </div>
+    <span class="badge" [ngClass]="'badge--' + badgeClass">
+      Sev. {{ severidadLabel }}
+    </span>
   </div>
 
-  <!-- Main result card -->
-  <div class="main-card" [class.show]="showContent">
+  <!-- ── TARJETA PRINCIPAL: anillo + datos ── -->
+  <div class="main-card">
 
-    <!-- Leaf + ring column -->
-    <div class="visual-col">
-      <div class="leaf-ring-wrap">
-        <!-- Confidence ring -->
-        <svg class="conf-ring" viewBox="0 0 110 110">
-          <circle cx="55" cy="55" r="48" class="ring-track"/>
-          <circle
-            cx="55" cy="55" r="48"
-            class="ring-progress"
-            [style.strokeDasharray]="circumference"
-            [style.strokeDashoffset]="dashOffset"
-            [style.stroke]="severidadColor"
-          />
-        </svg>
-        <!-- Center label -->
-        <div class="ring-center">
-          <span class="ring-num">{{ confianzaRedondeada }}</span>
-          <span class="ring-pct">%</span>
-          <span class="ring-label">IA</span>
-        </div>
-        <!-- Leaf bg inside ring -->
-        <div class="ring-leaf-bg">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M17 8C8 10 5.9 16.17 3.82 19.93C3 22 8 24 12 23C16 22 22 18 22 12C22 6 18 5 17 8Z" fill="currentColor" opacity="0.08"/>
-          </svg>
-        </div>
+    <!-- Anillo de confianza -->
+    <div class="ring-wrap">
+      <svg viewBox="0 0 110 110" class="ring-svg">
+        <circle cx="55" cy="55" r="48" class="ring-track"/>
+        <circle cx="55" cy="55" r="48"
+                class="ring-progress"
+                [style.stroke]="severidadColor"
+                [style.stroke-dasharray]="circumference"
+                [style.stroke-dashoffset]="ringOffset"/>
+      </svg>
+      <div class="ring-center">
+        <span class="ring-num">{{ resultado.enfermedad.confianza }}</span>
+        <span class="ring-unit">%</span>
+        <span class="ring-sub">confianza</span>
       </div>
     </div>
 
-    <!-- Disease info column -->
-    <div class="info-col">
+    <!-- Nombre y especie -->
+    <div class="disease-info">
       <h2 class="disease-name">{{ resultado.enfermedad.nombre }}</h2>
-      <p class="disease-sci"><em>{{ resultado.enfermedad.nombreCientifico }}</em></p>
-      <div class="severity-chip" [style.background]="severidadColor + '18'" [style.border-color]="severidadColor + '60'" [style.color]="severidadColor">
-        <span class="severity-dot" [style.background]="severidadColor"></span>
+      <p class="disease-sci">{{ resultado.enfermedad.nombreCientifico }}</p>
+      <div class="sev-chip"
+           [style.color]="severidadColor"
+           [style.background]="severidadColor + '18'"
+           [style.border-color]="severidadColor + '55'">
+        <span class="sev-dot" [style.background]="severidadColor"></span>
         Severidad {{ severidadLabel }}
       </div>
     </div>
   </div>
 
-  <!-- Urgency alert (alta severidad) -->
-  <div class="urgency-alert" *ngIf="isAlta && showContent">
+  <!-- Alerta urgente (solo severidad alta) -->
+  <div class="alert-danger" *ngIf="isAlta">
     <svg viewBox="0 0 24 24" fill="none">
-      <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+            stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
       <line x1="12" y1="9" x2="12" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       <line x1="12" y1="17" x2="12.01" y2="17" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
     </svg>
     <div>
-      <strong>Severidad Alta — Acción inmediata requerida</strong>
-      <p>Esta enfermedad puede propagarse rápidamente. Aplica el tratamiento dentro de las próximas 24–48 horas.</p>
+      <strong>Acción inmediata requerida</strong>
+      <p>Esta enfermedad se propaga rápidamente. Aplica tratamiento en las próximas 24–48 horas.</p>
     </div>
   </div>
 
-  <!-- Description -->
-  <div class="desc-card" [class.show]="showContent">
-    <div class="card-header">
-      <svg class="card-icon" viewBox="0 0 24 24" fill="none">
+  <!-- Descripción -->
+  <div class="info-card">
+    <div class="card-hdr">
+      <svg class="card-ico" viewBox="0 0 24 24" fill="none">
         <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
         <path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>
       <h3>Sobre la enfermedad</h3>
     </div>
-    <p class="desc-text">{{ resultado.enfermedad.descripcion }}</p>
+    <p class="card-body">{{ resultado.enfermedad.descripcion }}</p>
   </div>
 
-  <!-- Recommendations -->
-  <div class="rec-card" [class.show]="showContent">
-    <div class="card-header">
-      <svg class="card-icon" viewBox="0 0 24 24" fill="none">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-        <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Recomendaciones -->
+  <div class="rec-card">
+    <div class="card-hdr">
+      <svg class="card-ico" viewBox="0 0 24 24" fill="none">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
+              stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       <h3>Tratamiento recomendado</h3>
     </div>
     <ul class="rec-list">
-      <li class="rec-item" *ngFor="let rec of resultado.enfermedad.recomendaciones; let i = index"
-          [style.animationDelay]="(i * 0.07 + 0.2) + 's'">
+      <li class="rec-item"
+          *ngFor="let rec of resultado.enfermedad.recomendaciones; let i = index"
+          [style.animationDelay]="(i * 0.08) + 's'">
         <span class="rec-num">{{ i + 1 }}</span>
-        <span class="rec-text">{{ rec }}</span>
+        <span>{{ rec }}</span>
       </li>
     </ul>
   </div>
 
-  <!-- Actions -->
-  <div class="actions" [class.show]="showContent">
+  <!-- Acciones -->
+  <div class="actions-row">
     <button class="btn btn--primary" (click)="nuevoDiagnostico()">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-        <path d="M17 8C8 10 5.9 16.17 3.82 19.93C3 22 8 24 12 23C16 22 22 18 22 12C22 6 18 5 17 8Z" fill="currentColor"/>
+        <path d="M17 8C8 10 5.9 16.17 3.82 19.93C3 22 8 24 12 23C16 22 22 18 22 12C22 6 18 5 17 8Z"
+              fill="currentColor"/>
       </svg>
       Nuevo análisis
     </button>
-    <a routerLink="/historial" class="btn btn--outline">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-        <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      Ver historial
-    </a>
+    <a routerLink="/historial" class="btn btn--outline">Ver historial</a>
   </div>
 
 </div>
 
 <div class="resultado-loading" *ngIf="!resultado">
-  <div class="loading-spinner"></div>
+  <div class="spinner"></div>
   <p>Cargando resultado...</p>
 </div>

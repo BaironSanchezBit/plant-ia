@@ -71,6 +71,8 @@
     justify-content: center;
     gap: 8px;
     padding: 20px;
+    cursor: pointer;
+    &:hover { background: rgba(76,175,80,0.03); }
   }
 
   &__icon {
@@ -146,14 +148,22 @@
   &__svg { width: 180px; height: 180px; opacity: 0.85; }
 }
 
-// ─── Scan Line ────────────────────────────────────────────
+// ─── Scan Overlay + Line ─────────────────────────────────
+.scan-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(26,92,46,0.08);
+  z-index: 4;
+  overflow: hidden;
+}
+
 .scan-line {
   position: absolute;
   left: 0;
   right: 0;
-  height: 2px;
+  height: 3px;
   background: linear-gradient(90deg, transparent, var(--primary), var(--accent), var(--primary), transparent);
-  box-shadow: 0 0 8px rgba(76,175,80,0.4);
+  box-shadow: 0 0 10px rgba(76,175,80,0.5);
   animation: scanLine 1.8s ease-in-out infinite;
   top: 0;
   z-index: 5;

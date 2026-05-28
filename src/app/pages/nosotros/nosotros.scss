@@ -16,17 +16,21 @@
   margin-bottom: 22px;
   box-shadow: var(--shadow-md);
 
-  &__emblem {
-    width: 40px;
-    height: 40px;
-    background: rgba(255,255,255,0.15);
+  &__logo-wrap {
+    background: #ffffff;
     border-radius: var(--r-md);
+    padding: 5px 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
 
-    svg { width: 22px; height: 22px; color: #ffffff; }
+  &__logo {
+    height: 48px;
+    width: auto;
+    display: block;
   }
 
   &__text { flex: 1; }

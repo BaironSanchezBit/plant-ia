@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { DiagnosticoService } from '../../services/diagnostico';
 
@@ -9,8 +10,6 @@ import { DiagnosticoService } from '../../services/diagnostico';
   styleUrl: './diagnostico.scss',
 })
 export class Diagnostico implements OnDestroy {
-  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
-
   imageSelected = false;
   selectedImageUrl: string | null = null;
   isAnalyzing = false;
@@ -30,50 +29,47 @@ export class Diagnostico implements OnDestroy {
 
   private progressInterval?: ReturnType<typeof setInterval>;
   private msgIdx = 0;
+  private objectUrl: string | null = null;
 
   constructor(
     private svc: DiagnosticoService,
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) {}
 
-  /** Abre el selector de archivos. En móvil con capture="environment" usa la cámara. */
-  selectImage(source: 'camera' | 'gallery'): void {
-    const input = this.fileInput.nativeElement;
-    if (source === 'camera') {
-      input.setAttribute('capture', 'environment');
-    } else {
-      input.removeAttribute('capture');
-    }
-    input.value = ''; // permite reseleccionar el mismo archivo
-    input.click();
+  get safeImageUrl(): SafeUrl | null {
+    return this.selectedImageUrl
+      ? this.sanitizer.bypassSecurityTrustUrl(this.selectedImageUrl)
+      : null;
   }
 
-  /** Callback del input file — lee la imagen y la convierte a base64 */
+  /** Llamado desde el template: galleryInput.click() o cameraInput.click() */
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      this.errorMsg = 'Por favor selecciona un archivo de imagen (JPG, PNG, etc.)';
+      this.errorMsg = 'Selecciona un archivo de imagen (JPG, PNG, WEBP…)';
       return;
     }
-
     if (file.size > 15 * 1024 * 1024) {
       this.errorMsg = 'La imagen no debe superar 15 MB.';
       return;
     }
 
+    // Libera el URL anterior si existe
+    if (this.objectUrl) URL.revokeObjectURL(this.objectUrl);
+
+    // createObjectURL es síncrono → Angular detecta el cambio normalmente
+    this.objectUrl = URL.createObjectURL(file);
+    this.selectedImageUrl = this.objectUrl;
+    this.imageSelected = true;
     this.errorMsg = '';
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      this.selectedImageUrl = e.target?.result as string;
-      this.imageSelected = true;
-    };
-    reader.readAsDataURL(file);
   }
 
   clearImage(): void {
+    if (this.objectUrl) { URL.revokeObjectURL(this.objectUrl); this.objectUrl = null; }
     this.imageSelected = false;
     this.selectedImageUrl = null;
     this.isAnalyzing = false;
@@ -105,5 +101,6 @@ export class Diagnostico implements OnDestroy {
 
   ngOnDestroy(): void {
     clearInterval(this.progressInterval);
+    if (this.objectUrl) URL.revokeObjectURL(this.objectUrl);
   }
 }
